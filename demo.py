@@ -43,7 +43,7 @@ def main():
         raise ValueError("Pretrain model not found!", checkpoint_path)
 
     # TODO: Set data_root to the customized input dataset
-    args.data_root = '/datasets/demo/frames/'
+    args.data_root = 'datasets/demo/frames/'
     args.save_root = os.path.join(os.path.dirname(args.data_root), 'results/')
     if not os.path.isdir(args.save_root):
         os.makedirs(args.save_root)
@@ -93,7 +93,7 @@ def main():
 
     
     ################ DataLoader setup #################
-
+    args.num_workers = 0
     dataset = CustomizedDataset(args.data_root, args.T, args.NUM_CHUNKS[args.max_iter], source_fps, args.fps, BaseTransform(args.image_size, args.means, args.stds,args.scale_norm), anchor_mode=args.anchor_mode, im_format=im_format)
     dataloader = torch.utils.data.DataLoader(dataset, args.batch_size, num_workers=args.num_workers,
                                   shuffle=False, collate_fn=detection_collate, pin_memory=True)
